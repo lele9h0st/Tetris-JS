@@ -24,7 +24,8 @@ $(document).ready(function () {
         return max;
     }
 
-    function moveLeft(matrix) {
+    function moveLeft(blocks_arr) {
+        let matrix = blocks_arr[0];
         let left_most_index = left_most_block([...matrix])
         let colapseLeft = false;
         for (let i = 0; i < matrix.length; i++) {
@@ -44,8 +45,11 @@ $(document).ready(function () {
                 matrix[i] = loc;
                 let block1 = matrix[i][0] + "-" + matrix[i][1]
                 let oldblock = oldLoc[0] + "-" + (loc[1] + 1);
-                $("#" + block1 + "").css("background", "red");
-                $("#" + oldblock + "").css("background", "yellow");
+                $("#" + block1 + "").css("background", blocks_arr[3]);
+                $("#" + block1 + "").css("color", blocks_arr[3]);
+
+                $("#" + oldblock + "").css("background", "none");
+                $("#" + oldblock + "").css("color", "white");
 
             }
 
@@ -53,7 +57,8 @@ $(document).ready(function () {
         return matrix
     }
 
-    function moveRight(matrix) {
+    function moveRight(blocks_arr) {
+        let matrix = blocks_arr[0];
         let right_most_index = right_most_block([...matrix])
         let colapseRight = false;
 
@@ -74,8 +79,12 @@ $(document).ready(function () {
                 matrix[i] = loc;
                 let block1 = matrix[i][0] + "-" + matrix[i][1]
                 let oldblock = oldLoc[0] + "-" + (loc[1] - 1);
-                $("#" + block1 + "").css("background", "red");
-                $("#" + oldblock + "").css("background", "yellow");
+                $("#" + block1 + "").css("background", blocks_arr[3]);
+                $("#" + block1 + "").css("color", blocks_arr[3]);
+
+                $("#" + oldblock + "").css("background", "none");
+                $("#" + oldblock + "").css("color", "white");
+
                 // let r = Math.floor(Math.random() * 10);
                 // $("#" + oldblock + "").text(r + "");
 
@@ -85,10 +94,15 @@ $(document).ready(function () {
         return matrix
     }
 
-    function changeColor(oldBlock, newBlock) {
-        $("#" + newBlock + "").css("background", "red");
-        if (oldBlock != null)
+    function changeColor(oldBlock, newBlock, color) {
+        $("#" + newBlock + "").css("background", color);
+        $("#" + newBlock + "").css("color", color);
+
+        if (oldBlock != null) {
             $("#" + oldBlock + "").css("background", "none");
+            $("#" + oldBlock + "").css("color", "white");
+        }
+
     }
 
     function isSettle(matrix) {
@@ -106,8 +120,8 @@ $(document).ready(function () {
         return false;
     }
 
-    function isDuplicate(array,i) {
-        return $("#" + array[i][0] + "-" + array[i][1]).text() === "1" || array[i][0] > 19 ;
+    function isDuplicate(array, i) {
+        return $("#" + array[i][0] + "-" + array[i][1]).text() === "1" || array[i][0] > 19;
     }
 
     function checkTurn(array) {
@@ -117,9 +131,9 @@ $(document).ready(function () {
         //     backup[i] = array[i];
         // }
         let center = array[4]
-        let oldDiff=[]
-        let oldBlocks=[]
-        let newBlocks=[]
+        let oldDiff = []
+        let oldBlocks = []
+        let newBlocks = []
         for (let i = 0; i < array.length; i++) {
             let oldBlock = array[i][0] + "-" + array[i][1];
             oldBlocks.push(oldBlock)
@@ -127,9 +141,9 @@ $(document).ready(function () {
             if (array[i][0] > center[0] && array[i][1] > center[1]) {
                 dif = Math.abs(array[i][0] - center[0]) * 2;
                 array[i][0] -= dif;
-                if (isDuplicate(array,i)) {
+                if (isDuplicate(array, i)) {
                     array[i][0] += dif;
-                    for(let j=0;j<i;j++){
+                    for (let j = 0; j < i; j++) {
                         array[j][0] = oldDiff[j][0];
                     }
                     console.log("asdasfgsdhhgfjfgjghkghjkhgjfhgdfgfd")
@@ -141,9 +155,9 @@ $(document).ready(function () {
             } else if (array[i][0] > center[0] && array[i][1] < center[1]) {
                 dif = Math.abs(array[i][0] - center[0]) * 2;
                 array[i][1] += dif;
-                if (isDuplicate(array,i)) {
+                if (isDuplicate(array, i)) {
                     array[i][1] -= dif;
-                    for(let j=0;j<i;j++){
+                    for (let j = 0; j < i; j++) {
                         array[j][0] = oldDiff[j][0];
                     }
                     console.log("asdasfgsdhhgfjfgjghkghjkhgjfhgdfgfd")
@@ -155,9 +169,9 @@ $(document).ready(function () {
             } else if (array[i][0] < center[0] && array[i][1] > center[1]) {
                 dif = Math.abs(array[i][0] - center[0]) * 2;
                 array[i][1] -= dif;
-                if (isDuplicate(array,i)) {
+                if (isDuplicate(array, i)) {
                     array[i][1] += dif;
-                    for(let j=0;j<i;j++){
+                    for (let j = 0; j < i; j++) {
                         array[j][0] = oldDiff[j][0];
                     }
                     console.log("asdasfgsdhhgfjfgjghkghjkhgjfhgdfgfd")
@@ -169,9 +183,9 @@ $(document).ready(function () {
             } else if (array[i][0] < center[0] && array[i][1] < center[1]) {
                 dif = Math.abs(array[i][0] - center[0]) * 2;
                 array[i][0] += dif;
-                if (isDuplicate(array,i)) {
+                if (isDuplicate(array, i)) {
                     array[i][0] -= dif;
-                    for(let j=0;j<i;j++){
+                    for (let j = 0; j < i; j++) {
                         array[j][0] = oldDiff[j][0];
                     }
                     console.log("asdasfgsdhhgfjfgjghkghjkhgjfhgdfgfd")
@@ -184,10 +198,10 @@ $(document).ready(function () {
                 dif = Math.abs(array[i][0] - center[0]);
                 array[i][0] -= dif;
                 array[i][1] += dif;
-                if (isDuplicate(array,i)) {
+                if (isDuplicate(array, i)) {
                     array[i][0] += dif;
                     array[i][1] -= dif;
-                    for(let j=0;j<i;j++){
+                    for (let j = 0; j < i; j++) {
                         array[j][0] = oldDiff[j][0];
                         array[j][1] = oldDiff[j][1];
                     }
@@ -201,10 +215,10 @@ $(document).ready(function () {
                 dif = Math.abs(array[i][0] - center[0]);
                 array[i][0] += dif;
                 array[i][1] -= dif;
-                if (isDuplicate(array,i)) {
+                if (isDuplicate(array, i)) {
                     array[i][0] -= dif;
                     array[i][1] += dif;
-                    for(let j=0;j<i;j++){
+                    for (let j = 0; j < i; j++) {
                         array[j][0] = oldDiff[j][0];
                         array[j][1] = oldDiff[j][1];
                     }
@@ -218,10 +232,10 @@ $(document).ready(function () {
                 dif = Math.abs(array[i][1] - center[1]);
                 array[i][0] -= dif;
                 array[i][1] -= dif;
-                if (isDuplicate(array,i)) {
+                if (isDuplicate(array, i)) {
                     array[i][0] += dif;
                     array[i][1] += dif;
-                    for(let j=0;j<i;j++){
+                    for (let j = 0; j < i; j++) {
                         array[j][0] = oldDiff[j][0];
                         array[j][1] = oldDiff[j][1];
                     }
@@ -235,10 +249,10 @@ $(document).ready(function () {
                 dif = Math.abs(array[i][1] - center[1]);
                 array[i][0] += dif;
                 array[i][1] += dif;
-                if (isDuplicate(array,i)) {
+                if (isDuplicate(array, i)) {
                     array[i][0] -= dif;
                     array[i][1] -= dif;
-                    for(let j=0;j<i;j++){
+                    for (let j = 0; j < i; j++) {
                         array[j][0] = oldDiff[j][0];
                         array[j][1] = oldDiff[j][1];
                     }
@@ -249,7 +263,7 @@ $(document).ready(function () {
                     break;
                 }
             }
-            oldDiff.push([array[i][0],array[i][1]])
+            oldDiff.push([array[i][0], array[i][1]])
             newBlocks.push(array[i][0] + "-" + array[i][1]);
             console.log(array[i][0] + "=======" + array[i][1]);
         }
@@ -277,7 +291,7 @@ $(document).ready(function () {
         }
         if (isCheck != false) {
             for (let i = 0; i < array.length; i++) {
-                changeColor(isCheck[0][i], isCheck[1][i])
+                changeColor(isCheck[0][i], isCheck[1][i], blocks_arr[3])
             }
             // clone = isCheck[2]
         }
@@ -297,6 +311,7 @@ $(document).ready(function () {
 
     }
 
+
     function drop(blocks_arr) {
 
         let matrix = blocks_arr[0]
@@ -314,9 +329,13 @@ $(document).ready(function () {
             for (let i = 0; i < matrix.length; i++) {
 
                 $("#" + oldblock[i] + "").css("background", "none");
+                $("#" + oldblock[i] + "").css("color", "white");
+
             }
             for (let i = 0; i < matrix.length; i++) {
-                $("#" + block1[i] + "").css("background", "red");
+                $("#" + block1[i] + "").css("background", blocks_arr[3]);
+                $("#" + block1[i] + "").css("color", blocks_arr[3]);
+
             }
             blocks_arr[2] = matrix[4];
             for (let i = 0; i < matrix.length; i++) {
@@ -340,10 +359,13 @@ $(document).ready(function () {
                     for (let j = 0; j < 10; j++) {
                         idname = (k + 1) + "-" + j;
                         let idUpName = k + "-" + j;
-                        let color = $("#" + idUpName).css("background");
+                        let background = $("#" + idUpName).css("background");
                         let txt = $("#" + idUpName).text();
-                        $("#" + idname).css("background", color);
+                        let color=$("#" + idUpName).css("color");
+                        $("#" + idname).css("background", background);
                         $("#" + idname).text(txt);
+                        $("#" + idname).css("color", color);
+
                     }
                 }
             }
@@ -381,18 +403,24 @@ $(document).ready(function () {
     // let long = [[3, 5], [2, 5], [1, 5], [0, 5]]
     // let square = [[1, 4], [1, 5], [0, 4], [0, 5]]
     // let t = [[1, 4], [1, 5], [1, 6], [0, 5]]
-    let l = [[2, 4], [1, 4], [0, 4], [2, 5], [1, 4]]
-    let rl = [[2, 4], [2, 5], [1, 5], [0, 5], [1, 5]]
-    let long = [[3, 5], [2, 5], [1, 5], [0, 5], [2, 5]]
-    let square = [[1, 4], [1, 5], [0, 4], [0, 5]]
-    let t = [[1, 4], [1, 5], [1, 6], [0, 5], [1, 5]]
-    let z = [[1, 4], [1, 5], [0, 5], [0, 6], [1, 5]]
+    let l = [[-1, 4], [-2, 4], [-3, 4], [-1, 5], [-2, 4]]
+    let rl = [[-1, 4], [-1, 5], [-2, 5], [-3, 5], [-2, 5]]
+    let long = [[0, 5], [-1, 5], [-2, 5], [-3, 5], [-1, 5]]
+    let square = [[-2, 4], [-2, 5], [-3, 4], [-3, 5]]
+    let t = [[-2, 4], [-2, 5], [-2, 6], [-3, 5], [-2, 5]]
+    let z = [[-2, 4], [-2, 5], [-3, 5], [-3, 6], [-2, 5]]
     let type = [l, rl, long, square, t, z];
+    let color = ["red", "green", "blue", "yellow", "purple", "orange"]
     let idname = "";
-    for (let i = 0; i < 20; i++) {
+    for (let i = 0; i < 23; i++) {
         for (let j = 0; j < 10; j++) {
-            idname = i + "-" + j
-            $("#playground").append('<div class="small-block" id="' + idname + '">0</div>')
+            idname = (i - 3) + "-" + j
+            if (i < 3) {
+                $("#playground").append('<div class="small-block-non-border" id="' + idname + '">0</div>')
+            } else {
+                $("#playground").append('<div class="small-block" id="' + idname + '">0</div>')
+
+            }
         }
     }
     let index = Math.floor(Math.random() * 6);
@@ -404,16 +432,17 @@ $(document).ready(function () {
     blocks_arr[0] = arr;
     blocks_arr[1] = index;
     blocks_arr[2] = centerBlock(blocks_arr[0], blocks_arr[1])
+    blocks_arr[3] = color[index];
     var b = blocks_arr[0];
     for (let i = 0; i < b.length; i++) {
-        changeColor(null, b[i][0] + "-" + b[i][1]);
+        changeColor(null, b[i][0] + "-" + b[i][1], blocks_arr[3]);
     }
     var i = 1;
     $(document).keydown(function (e) {
         b = blocks_arr[0];
         switch (e.which) {
             case 37: // left
-                moveLeft(b)
+                moveLeft(blocks_arr)
                 break;
 
             case 38: // up
@@ -421,12 +450,16 @@ $(document).ready(function () {
                 break;
 
             case 39: // right
-                moveRight(b)
+                moveRight(blocks_arr)
                 break;
 
             case 40: // down
                 drop(blocks_arr);
                 break;
+            case 32:
+                while (!isSettle(blocks_arr[0])) {
+                    drop(blocks_arr)
+                }
         }
     });
 
@@ -438,7 +471,6 @@ $(document).ready(function () {
             // console.log(b)
             // console.log(b.block_matrix[1])
             if (!isSettle(b)) {
-
                 drop(blocks_arr)
             } else {
 
@@ -451,6 +483,11 @@ $(document).ready(function () {
                 blocks_arr[0] = arr;
                 blocks_arr[1] = index;
                 blocks_arr[2] = centerBlock(blocks_arr[0], blocks_arr[1])
+                blocks_arr[3] = color[index]
+                if (isSettle(blocks_arr[0])) {
+                    alert("end");
+                    c = 1000;
+                }
                 // console.log(blocks_arr.length + "***********************")
                 rewardChecking();
             }
@@ -460,7 +497,7 @@ $(document).ready(function () {
             if (c < 1000) {
                 myLoop(b);
             }
-        }, 200)
+        }, 500)
     }
 
     myLoop(b);

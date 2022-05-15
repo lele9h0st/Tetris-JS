@@ -2,28 +2,83 @@ body {
   width: 100%;
   height: 460px;
 
-  #playground {
-    width: 200px;
+  #main {
+    width: 420px;
     height: 460px;
-    border: black 1px solid;
+    display: flex;
     margin: auto;
+    #playground {
+      width: 200px;
+      height: 460px;
+      border: black 1px solid;
 
-    .small-block {
-      width: 18px;
-      display: inline-block;
-      height: 18px;
-      border: lightgray 1px solid;
-      margin: 0px;
-      color: white;
+
+      .small-block {
+        width: 18px;
+        display: inline-block;
+        height: 18px;
+        border: lightgray 1px solid;
+        margin: 0px;
+        color: white;
+      }
+
+      .small-block-non-border {
+        width: 18px;
+        display: inline-block;
+        height: 18px;
+        border: white 1px solid;
+        margin: 0px;
+        color: white;
+      }
+
+    }
+    #dialog{
+      width: 200px;
+      height: 200px;
+      padding-top: 100px;
+      display: none;
+    }
+    #win_dialog{
+      width: 200px;
+      height: 200px;
+      padding-top: 100px;
+      display: none;
+    }
+    #mainMenu {
+      width: 200px;
+      height: 460px;
+      border: black 1px solid;
+      z-index: 1;
+      .start{
+        margin: 100px 0 0 80px;
+      }
+    }
+  }
+  #rightPanel{
+    width: 100px;
+    height: 200px;
+    border: black 1px solid;
+    text-align: center;
+    .image_panel{
+      width: 100%;
+      height: 100px;
+      display: flex;
+      border: black 1px solid;
+      align-items: center;
+      justify-content: center;
+      img{
+        width: 50px;
+        height: 100px;
+      }
     }
 
-    .small-block-non-border {
-      width: 18px;
-      display: inline-block;
-      height: 18px;
-      border: white 1px solid;
-      margin: 0px;
-      color: white;
-    }
+  }
+  .banner{
+    width: 198px;
+    margin: 1px 1px 0 1px;
+    height: 59px;
+    background: white;
+    z-index: 10;
+    position: absolute;
   }
 }

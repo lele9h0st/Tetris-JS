@@ -14,10 +14,9 @@ body #main #playground {
   border: black 1px solid;
 }
 body #main #playground .small-block {
-  width: 18px;
+  width: 20px;
   display: inline-block;
-  height: 18px;
-  border: lightgray 1px solid;
+  height: 20px;
   margin: 0px;
   color: white;
 }
@@ -47,8 +46,8 @@ body #main #mainMenu {
   border: black 1px solid;
   z-index: 1;
 }
-body #main #mainMenu .start {
-  margin: 100px 0 0 80px;
+body #main #mainMenu .levels {
+  margin: 100px 0 0 30%;
 }
 body #rightPanel {
   width: 100px;
@@ -75,6 +74,17 @@ body .banner {
   background: white;
   z-index: 10;
   position: absolute;
+}
+body .banner .image-banner {
+  width: 200px;
+  height: 60px;
+}
+body button {
+  width: 85px;
+  height: 35px;
+  background: none;
+  border: black solid 1px;
+  cursor: pointer;
 }
 
 /*# sourceMappingURL=style.css.map */

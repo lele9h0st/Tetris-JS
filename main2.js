@@ -302,7 +302,13 @@ $(document).ready(function () {
         if (isCheck != false) {
             // changeColor(isCheck[0][i], isCheck[1][i], blocks_arr[3])
             for (let i = 0; i < array.length; i++) {
-                changeColor(isCheck[0][i], isCheck[1][i], blocks_arr[3])
+                // changeColor(isCheck[0][i], isCheck[1][i], blocks_arr[3])
+                $("#" + isCheck[1][i] + "").css("background", blocks_arr[3]);
+                $("#" + isCheck[1][i] + "").css("color", blocks_arr[3]);
+                if (isCheck[0][i] != null&&!isCheck[1].includes(isCheck[0][i]) ) {
+                    $("#" + isCheck[0][i] + "").css("background", "none");
+                    $("#" + isCheck[0][i] + "").css("color", "white");
+                }
             }
 
             // clone = isCheck[2]
@@ -436,7 +442,7 @@ $(document).ready(function () {
 
     function make_playground() {
         $("#main").prepend('<div  id="playground"></div>')
-        $("#main").prepend('<div class="banner" > </div>')
+        $("#main").prepend('<div class="banner" ><img class="image-banner" src="images/tetris logo.jpg"> </div>')
         let idname = "";
         for (let i = 0; i < 23; i++) {
             for (let j = 0; j < 10; j++) {
@@ -499,7 +505,7 @@ $(document).ready(function () {
                 }
         }
     });
-    $(".start").click(function () {
+    $(".level").click(function () {
         point = 0;
         $("#mainMenu").css("display", "none");
         make_playground();
@@ -569,7 +575,7 @@ $(document).ready(function () {
                     $("#playground").remove();
                 }
             }
-        }, 500)
+        }, 1000)
 
     }
 

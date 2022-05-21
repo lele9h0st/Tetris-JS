@@ -46,11 +46,12 @@ $(document).ready(function () {
                 matrix[4] = loc;
                 let block1 = matrix[4][0] + "-" + matrix[4][1]
                 let oldblock = oldLoc[0] + "-" + (loc[1] + 1);
-                $("#" + block1 + "").css("background", blocks_arr[3]);
-                $("#" + block1 + "").css("color", blocks_arr[3]);
-
-                $("#" + oldblock + "").css("background", "none");
-                $("#" + oldblock + "").css("color", "white");
+                // $("#" + block1 + "").css("background", blocks_arr[3]);
+                // $("#" + block1 + "").css("color", blocks_arr[3]);
+                //
+                // $("#" + oldblock + "").css("background", "none");
+                // $("#" + oldblock + "").css("color", "white");
+                changeColor(oldblock,block1,blocks_arr[3])
             }
             for (let i = 0; i < 4; i++) {
                 var loc = [...matrix[i]];
@@ -60,11 +61,12 @@ $(document).ready(function () {
                 matrix[i] = loc;
                 let block1 = matrix[i][0] + "-" + matrix[i][1]
                 let oldblock = oldLoc[0] + "-" + (loc[1] + 1);
-                $("#" + block1 + "").css("background", blocks_arr[3]);
-                $("#" + block1 + "").css("color", blocks_arr[3]);
-
-                $("#" + oldblock + "").css("background", "none");
-                $("#" + oldblock + "").css("color", "white");
+                // $("#" + block1 + "").css("background", blocks_arr[3]);
+                // $("#" + block1 + "").css("color", blocks_arr[3]);
+                //
+                // $("#" + oldblock + "").css("background", "none");
+                // $("#" + oldblock + "").css("color", "white");
+                changeColor(oldblock,block1,blocks_arr[3])
             }
 
 
@@ -94,11 +96,12 @@ $(document).ready(function () {
                 matrix[i] = loc;
                 let block1 = matrix[i][0] + "-" + matrix[i][1]
                 let oldblock = oldLoc[0] + "-" + (loc[1] - 1);
-                $("#" + block1 + "").css("background", blocks_arr[3]);
-                $("#" + block1 + "").css("color", blocks_arr[3]);
-
-                $("#" + oldblock + "").css("background", "none");
-                $("#" + oldblock + "").css("color", "white");
+                // $("#" + block1 + "").css("background", blocks_arr[3]);
+                // $("#" + block1 + "").css("color", blocks_arr[3]);
+                //
+                // $("#" + oldblock + "").css("background", "none");
+                // $("#" + oldblock + "").css("color", "white");
+                changeColor(oldblock,block1,blocks_arr[3])
 
             }
         }
@@ -149,7 +152,7 @@ $(document).ready(function () {
     var max_row = 20
 
     function isDuplicate(array, i) {
-        return $("#" + array[i][0] + "-" + array[i][1]).text() === "1" || array[i][0] > (max_row - 1) || array[i][1] < 0 || array[i][1] > 9;
+        return $("#" + array[i][0] + "-" + array[i][1]).text() === "1"||$("#" + array[i][0] + "-" + array[i][1]).text() === "2" || array[i][0] > (max_row - 1) || array[i][1] < 0 || array[i][1] > 9;
     }
 
     function checkTurn(array) {
@@ -172,11 +175,7 @@ $(document).ready(function () {
                     for (let j = 0; j < i; j++) {
                         array[j][0] = oldDiff[j][0];
                     }
-                    console.log("asdasfgsdhhgfjfgjghkghjkhgjfhgdfgfd")
-                    // newBlocks = [...oldBlocks]
-                    // array = backup
                     return false;
-                    // break;
                 }
             } else if (array[i][0] > center[0] && array[i][1] < center[1]) {
                 dif = Math.abs(array[i][0] - center[0]) * 2;
@@ -186,11 +185,8 @@ $(document).ready(function () {
                     for (let j = 0; j < i; j++) {
                         array[j][0] = oldDiff[j][0];
                     }
-                    console.log("asdasfgsdhhgfjfgjghkghjkhgjfhgdfgfd")
-                    // newBlocks = [...oldBlocks]
-                    // array = backup
                     return false;
-                    // break;
+
                 }
             } else if (array[i][0] < center[0] && array[i][1] > center[1]) {
                 dif = Math.abs(array[i][0] - center[0]) * 2;
@@ -200,11 +196,7 @@ $(document).ready(function () {
                     for (let j = 0; j < i; j++) {
                         array[j][0] = oldDiff[j][0];
                     }
-                    console.log("asdasfgsdhhgfjfgjghkghjkhgjfhgdfgfd")
-                    // newBlocks = [...oldBlocks]
-                    // array = backup
                     return false;
-                    // break;
                 }
             } else if (array[i][0] < center[0] && array[i][1] < center[1]) {
                 dif = Math.abs(array[i][0] - center[0]) * 2;
@@ -214,11 +206,7 @@ $(document).ready(function () {
                     for (let j = 0; j < i; j++) {
                         array[j][0] = oldDiff[j][0];
                     }
-                    console.log("asdasfgsdhhgfjfgjghkghjkhgjfhgdfgfd")
-                    // newBlocks = [...oldBlocks]
-                    // array = backup
                     return false;
-                    // break;
                 }
             } else if (array[i][0] > center[0] && array[i][1] == center[1]) {
                 dif = Math.abs(array[i][0] - center[0]);
@@ -231,11 +219,7 @@ $(document).ready(function () {
                         array[j][0] = oldDiff[j][0];
                         array[j][1] = oldDiff[j][1];
                     }
-                    console.log("asdasfgsdhhgfjfgjghkghjkhgjfhgdfgfd")
-                    // newBlocks = [...oldBlocks]
-                    // array = backup
                     return false;
-                    // break;
                 }
             } else if (array[i][0] < center[0] && array[i][1] == center[1]) {
                 dif = Math.abs(array[i][0] - center[0]);
@@ -248,11 +232,7 @@ $(document).ready(function () {
                         array[j][0] = oldDiff[j][0];
                         array[j][1] = oldDiff[j][1];
                     }
-                    console.log("asdasfgsdhhgfjfgjghkghjkhgjfhgdfgfd")
-                    // newBlocks = [...oldBlocks]
-                    // array = backup
                     return false;
-                    // break;
                 }
             } else if (array[i][0] == center[0] && array[i][1] > center[1]) {
                 dif = Math.abs(array[i][1] - center[1]);
@@ -265,11 +245,7 @@ $(document).ready(function () {
                         array[j][0] = oldDiff[j][0];
                         array[j][1] = oldDiff[j][1];
                     }
-                    console.log("asdasfgsdhhgfjfgjghkghjkhgjfhgdfgfd")
-                    // newBlocks = [...oldBlocks]
-                    // array = backup
                     return false;
-                    // break;
                 }
             } else if (array[i][0] == center[0] && array[i][1] < center[1]) {
                 dif = Math.abs(array[i][1] - center[1]);
@@ -282,44 +258,23 @@ $(document).ready(function () {
                         array[j][0] = oldDiff[j][0];
                         array[j][1] = oldDiff[j][1];
                     }
-                    console.log("asdasfgsdhhgfjfgjghkghjkhgjfhgdfgfd")
-                    // newBlocks = [...oldBlocks]
-                    // array = backup
                     return false;
-                    // break;
                 }
             }
-
             newBlocks.push(array[i][0] + "-" + array[i][1]);
-            console.log(array[i][0] + "=======" + array[i][1]);
         }
         return [oldBlocks, newBlocks, array]
     }
 
     function turn(blocks_arr) {
         let array = [...blocks_arr[0]];
-        let center = array[4]
-        // console.log(center[0] + "-" + center[1] + "*******")
-        // console.log(center[1] == 9)
-        // if (center[1] == 9) {
-        //     array = moveLeft(array)
-        //
-        // } else if (center[1] == 0) {
-        //     array = moveRight(array)
-        //     if (blocks_arr[1] == 2)
-        //         array = moveRight(array)
-        // }
         let isCheck = checkTurn(array);
-        // alert(isCheck)
-        let count = 0;
         let clone = []
         for (let i = 0; i < 4; i++) {
             clone[i] = array[i];
         }
         if (isCheck != false) {
-            // changeColor(isCheck[0][i], isCheck[1][i], blocks_arr[3])
             for (let i = 0; i < array.length; i++) {
-                // changeColor(isCheck[0][i], isCheck[1][i], blocks_arr[3])
                 $("#" + isCheck[1][i] + "").css("background", blocks_arr[3]);
                 $("#" + isCheck[1][i] + "").css("color", blocks_arr[3]);
                 if (isCheck[0][i] != null && !isCheck[1].includes(isCheck[0][i])) {
@@ -327,14 +282,10 @@ $(document).ready(function () {
                     $("#" + isCheck[0][i] + "").css("color", "white");
                 }
             }
-
-            // clone = isCheck[2]
         }
 
         clone.sort(compare);
         clone[4] = array[4]
-        // alert(clone[4])
-
         changeColor(null, clone[4][0] + "-" + clone[4][1], blocks_arr[3])
         blocks_arr[0] = clone;
     }
@@ -363,10 +314,8 @@ $(document).ready(function () {
                 oldblock.push((loc[0] + 1) + "-" + oldLoc[1]);
             }
             for (let i = 0; i < matrix.length; i++) {
-
                 $("#" + oldblock[i] + "").css("background", "none");
                 $("#" + oldblock[i] + "").css("color", "white");
-
             }
             for (let i = 0; i < matrix.length; i++) {
                 $("#" + block1[i] + "").css("background", blocks_arr[3]);
@@ -394,10 +343,8 @@ $(document).ready(function () {
                 oldblock.push((loc[0] - 1) + "-" + oldLoc[1]);
             }
             for (let i = 0; i < matrix.length; i++) {
-
                 $("#" + oldblock[i] + "").css("background", "none");
                 $("#" + oldblock[i] + "").css("color", "white");
-
             }
             for (let i = 0; i < matrix.length; i++) {
                 $("#" + block1[i] + "").css("background", blocks_arr[3]);
@@ -478,32 +425,34 @@ $(document).ready(function () {
                 }
 
             }
-            color_arr=[]
+            color_arr = []
         }
     }
 
-    //
     function centerBlock(blocks, index) {
         let center;
         switch (index) {
-            case 0:
-                center = blocks[4];
-                break;
-            case 1:
-                center = blocks[4];
-                break;
-            case 2:
-                center = blocks[4];
-                break;
+            // case 0:
+            //     center = blocks[4];
+            //     break;
+            // case 1:
+            //     center = blocks[4];
+            //     break;
+            // case 2:
+            //     center = blocks[4];
+            //     break;
             case 3:
 
                 break;
-            case 4:
+            // case 4:
+            //     center = blocks[4];
+            //     break;
+            // case 5:
+            //     center = blocks[4];
+            //     break;
+            default:
                 center = blocks[4];
-                break;
-            case 5:
-                center = blocks[4];
-                break;
+
         }
         return center;
     }
@@ -536,9 +485,6 @@ $(document).ready(function () {
 
     function incrementSeconds() {
         seconds += 1;
-        // if (seconds == 6) {
-        //     seconds = 0;
-        // }
         $(".counting").text("Counting: " + seconds);
 
     }
@@ -558,12 +504,6 @@ $(document).ready(function () {
         }
     }
 
-    // var cancel = setInterval(incrementSeconds, 1000);
-    // let l = [[2, 4], [1, 4], [0, 4], [2, 5]]
-    // let rl = [[2, 4], [2, 5], [1, 5], [0, 5]]
-    // let long = [[3, 5], [2, 5], [1, 5], [0, 5]]
-    // let square = [[1, 4], [1, 5], [0, 4], [0, 5]]
-    // let t = [[1, 4], [1, 5], [1, 6], [0, 5]]
     let l = [[-1, 4], [-2, 4], [-3, 4], [-1, 5], [-2, 4]]
     let rl = [[-1, 4], [-1, 5], [-2, 5], [-3, 5], [-2, 5]]
     let long = [[0, 5], [-1, 5], [-2, 5], [-3, 5], [-1, 5]]
@@ -652,7 +592,6 @@ $(document).ready(function () {
             arr2[i][0] = arr[i][0] + 24;
             arr2[i][1] = arr[i][1];
         }
-
         blocks_arr2[0] = arr2;
         blocks_arr2[1] = nextBlock;
         blocks_arr2[2] = centerBlock(blocks_arr2[0], blocks_arr2[1])
@@ -673,28 +612,40 @@ $(document).ready(function () {
     var i = 1;
     var point = 0;
     $(document).keydown(function (e) {
-        // b = blocks_arr[0];
         switch (e.which) {
             case 37: // left
-                moveLeft(blocks_arr)
+                if (currentLevel == "level6")
+                    moveRight(blocks_arr)
+                else
+                    moveLeft(blocks_arr)
                 if (currentLevel == "level4")
                     moveLeft(blocks_arr2)
                 break;
 
             case 38: // up
-                turn(blocks_arr)
+                if (currentLevel == "level6")
+                    drop(blocks_arr);
+                else
+                    turn(blocks_arr)
                 if (currentLevel == "level4")
                     turn(blocks_arr2)
                 break;
 
             case 39: // right
-                moveRight(blocks_arr)
+                if (currentLevel == "level6")
+                    moveLeft(blocks_arr)
+                else
+                    moveRight(blocks_arr)
+
                 if (currentLevel == "level4")
                     moveRight(blocks_arr2)
                 break;
 
             case 40: // down
-                drop(blocks_arr);
+                if (currentLevel == "level6")
+                    turn(blocks_arr)
+                else
+                    drop(blocks_arr);
                 if (currentLevel == "level4")
                     moveUp(blocks_arr2)
                 break;
@@ -1000,6 +951,48 @@ $(document).ready(function () {
                     $("#playground").remove();
                 }
             }
+        }, 500)
+
+    }
+
+    function level6(b, c) {
+        b = blocks_arr[0];
+
+        setTimeout(function () {
+            if (!isSettle(b)) {
+                drop(blocks_arr)
+            } else {
+
+                for (let i = 0; i < blocks_arr[0].length; i++) {
+                    let block1 = blocks_arr[0][i][0] + "-" + blocks_arr[0][i][1];
+                    $("#" + block1 + "").text("1");
+                }
+                makeBlock(nextBlock)
+                nextBlock = Math.floor(Math.random() * 6);
+                setNextImg(nextBlock)
+                if (isSettle(blocks_arr[0])) {
+                    c = 1000;
+                }
+
+                rewardChecking();
+                if (point >= 1000) {
+                    c = 1000;
+                    won = true;
+                }
+            }
+
+            c++;
+            if (c < 1000) {
+                level6(b, c);
+            } else {
+                if (won) {
+                    $("#win_dialog").css("display", "block");
+                    $("#playground").remove();
+                } else {
+                    $("#dialog").css("display", "block");
+                    $("#playground").remove();
+                }
+            }
         }, 1000)
 
     }
@@ -1021,6 +1014,9 @@ $(document).ready(function () {
                 break;
             case 'level5':
                 level5(b[0], c);
+                break;
+            case 'level6':
+                level6(b[0], c);
                 break;
         }
     }

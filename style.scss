@@ -72,11 +72,26 @@ body {
         height: 100px;
       }
     }
+    .counting{
+      display: none;
+    }
 
   }
   .banner{
     width: 198px;
     margin: 1px 1px 0 1px;
+    height: 59px;
+    background: white;
+    z-index: 10;
+    position: absolute;
+    .image-banner{
+      width: 200px;
+      height: 60px;
+    }
+  }
+  .banner-bottom{
+    width: 198px;
+    margin: 480px 1px 0 1px;
     height: 59px;
     background: white;
     z-index: 10;

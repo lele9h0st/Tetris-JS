@@ -67,6 +67,9 @@ body #rightPanel .image_panel img {
   width: 50px;
   height: 100px;
 }
+body #rightPanel .counting {
+  display: none;
+}
 body .banner {
   width: 198px;
   margin: 1px 1px 0 1px;
@@ -76,6 +79,18 @@ body .banner {
   position: absolute;
 }
 body .banner .image-banner {
+  width: 200px;
+  height: 60px;
+}
+body .banner-bottom {
+  width: 198px;
+  margin: 480px 1px 0 1px;
+  height: 59px;
+  background: white;
+  z-index: 10;
+  position: absolute;
+}
+body .banner-bottom .image-banner {
   width: 200px;
   height: 60px;
 }

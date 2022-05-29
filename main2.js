@@ -32,7 +32,7 @@ $(document).ready(function () {
             var loc = [...matrix[i]];
             loc[1] -= 1;
             let block = loc[0] + "-" + loc[1]
-            if (($("#" + block).text() == "1")) {
+            if (($("#" + block).text() == "1") || ($("#" + block).text() == "3")) {
                 colapseLeft = true;
             }
         }
@@ -51,7 +51,7 @@ $(document).ready(function () {
                 //
                 // $("#" + oldblock + "").css("background", "none");
                 // $("#" + oldblock + "").css("color", "white");
-                changeColor(oldblock,block1,blocks_arr[3])
+                changeColor(oldblock, block1, blocks_arr[3])
             }
             for (let i = 0; i < 4; i++) {
                 var loc = [...matrix[i]];
@@ -66,7 +66,7 @@ $(document).ready(function () {
                 //
                 // $("#" + oldblock + "").css("background", "none");
                 // $("#" + oldblock + "").css("color", "white");
-                changeColor(oldblock,block1,blocks_arr[3])
+                changeColor(oldblock, block1, blocks_arr[3])
             }
 
 
@@ -83,7 +83,7 @@ $(document).ready(function () {
             var loc = [...matrix[i]];
             loc[1] += 1;
             let block = loc[0] + "-" + loc[1]
-            if (($("#" + block).text() == "1")) {
+            if (($("#" + block).text() == "1") || ($("#" + block).text() == "3")) {
                 colapseRight = true;
             }
         }
@@ -101,7 +101,7 @@ $(document).ready(function () {
                 //
                 // $("#" + oldblock + "").css("background", "none");
                 // $("#" + oldblock + "").css("color", "white");
-                changeColor(oldblock,block1,blocks_arr[3])
+                changeColor(oldblock, block1, blocks_arr[3])
 
             }
         }
@@ -152,17 +152,18 @@ $(document).ready(function () {
     var max_row = 20
 
     function isDuplicate(array, i) {
-        return $("#" + array[i][0] + "-" + array[i][1]).text() === "1"||$("#" + array[i][0] + "-" + array[i][1]).text() === "2" || array[i][0] > (max_row - 1) || array[i][1] < 0 || array[i][1] > 9;
+        return $("#" + array[i][0] + "-" + array[i][1]).text() === "1" || $("#" + array[i][0] + "-" + array[i][1]).text() === "3" || array[i][0] > (max_row - 1) || array[i][1] < 0 || array[i][1] > 9;
     }
 
     function checkTurn(array) {
         let dif;
-        let backup = JSON.parse(JSON.stringify(array));
+
         let center = array[4]
         let oldDiff = []
         let oldBlocks = []
         let newBlocks = []
-        for (let i = 0; i < array.length; i++) {
+        for (let i = 0; i < array.length - 1; i++) {
+
             let oldBlock = array[i][0] + "-" + array[i][1];
             oldBlocks.push(oldBlock)
             oldDiff.push([array[i][0], array[i][1]])
@@ -175,6 +176,7 @@ $(document).ready(function () {
                     for (let j = 0; j < i; j++) {
                         array[j][0] = oldDiff[j][0];
                     }
+                    console.log("duplicate")
                     return false;
                 }
             } else if (array[i][0] > center[0] && array[i][1] < center[1]) {
@@ -184,7 +186,9 @@ $(document).ready(function () {
                     array[i][1] -= dif;
                     for (let j = 0; j < i; j++) {
                         array[j][0] = oldDiff[j][0];
+                        array[j][1] = oldDiff[j][1];
                     }
+                    console.log("duplicate")
                     return false;
 
                 }
@@ -195,7 +199,9 @@ $(document).ready(function () {
                     array[i][1] += dif;
                     for (let j = 0; j < i; j++) {
                         array[j][0] = oldDiff[j][0];
+                        array[j][1] = oldDiff[j][1];
                     }
+                    console.log("duplicate")
                     return false;
                 }
             } else if (array[i][0] < center[0] && array[i][1] < center[1]) {
@@ -205,7 +211,21 @@ $(document).ready(function () {
                     array[i][0] -= dif;
                     for (let j = 0; j < i; j++) {
                         array[j][0] = oldDiff[j][0];
+                        array[j][1] = oldDiff[j][1];
                     }
+                    console.log("duplicate")
+                    return false;
+                }
+            } else if (array[i][0] > center[0] && array[i][1] < center[1]) {
+                dif = Math.abs(array[i][0] - center[0]) * 2;
+                array[i][1] += dif;
+                if (isDuplicate(array, i)) {
+                    array[i][1] -= dif;
+                    for (let j = 0; j < i; j++) {
+                        array[j][0] = oldDiff[j][0];
+                        array[j][1] = oldDiff[j][1];
+                    }
+                    console.log("duplicate")
                     return false;
                 }
             } else if (array[i][0] > center[0] && array[i][1] == center[1]) {
@@ -219,6 +239,7 @@ $(document).ready(function () {
                         array[j][0] = oldDiff[j][0];
                         array[j][1] = oldDiff[j][1];
                     }
+                    console.log("duplicate")
                     return false;
                 }
             } else if (array[i][0] < center[0] && array[i][1] == center[1]) {
@@ -232,6 +253,7 @@ $(document).ready(function () {
                         array[j][0] = oldDiff[j][0];
                         array[j][1] = oldDiff[j][1];
                     }
+                    console.log("duplicate")
                     return false;
                 }
             } else if (array[i][0] == center[0] && array[i][1] > center[1]) {
@@ -245,6 +267,7 @@ $(document).ready(function () {
                         array[j][0] = oldDiff[j][0];
                         array[j][1] = oldDiff[j][1];
                     }
+                    console.log("duplicate")
                     return false;
                 }
             } else if (array[i][0] == center[0] && array[i][1] < center[1]) {
@@ -258,6 +281,7 @@ $(document).ready(function () {
                         array[j][0] = oldDiff[j][0];
                         array[j][1] = oldDiff[j][1];
                     }
+                    console.log("duplicate")
                     return false;
                 }
             }
@@ -403,7 +427,7 @@ $(document).ready(function () {
                 if (color_arr.length > 2) {
                     for (let j = 0; j < 10; j++) {
                         $("#" + i + "-" + j + "").css("background", "grey");
-                        $("#" + i + "-" + j + "").text("2");
+                        $("#" + i + "-" + j + "").text("3");
                         $("#" + i + "-" + j + "").css("color", "grey");
                     }
                 } else {
@@ -473,7 +497,7 @@ $(document).ready(function () {
         }
         for (let j = 0; j < 10; j++) {
             $("#" + 19 + "-" + j + "").css("background", "grey");
-            $("#" + 19 + "-" + j + "").text("2");
+            $("#" + 19 + "-" + j + "").text("3");
             $("#" + 19 + "-" + j + "").css("color", "grey");
         }
         moveUp(blocks_arr);
@@ -504,10 +528,61 @@ $(document).ready(function () {
         }
     }
 
+    var barrier = []
+    var isBarrier = false;
+    var timeBarrier = 0;
+
+    function makeBarrier() {
+        var currentHeight = blocks_arr[0][4][0] + 3 ;
+        var side = 0
+        var sum = 0
+        if (blocks_arr[0][4][1] >= 5)
+            side = 1;
+        else side = 0;
+        if (side == 0) {
+            for (let j = 0; j < 5; j++) {
+                sum += parseInt($("#" + currentHeight + "-" + j + "").text());
+            }
+            if (sum == 0) {
+                for (let j = 0; j < 5; j++) {
+                    $("#" + currentHeight + "-" + j + "").css("background", "grey");
+                    $("#" + currentHeight + "-" + j + "").text("3");
+                    $("#" + currentHeight + "-" + j + "").css("color", "grey");
+                    barrier.push([currentHeight, j])
+                }
+            }
+        } else {
+            for (let j = 0; j < 5; j++) {
+                sum += parseInt($("#" + currentHeight + "-" + j + "").text());
+            }
+            if (sum == 0) {
+                for (let j = 5; j < 10; j++) {
+                    $("#" + currentHeight + "-" + j + "").css("background", "grey");
+                    $("#" + currentHeight + "-" + j + "").text("3");
+                    $("#" + currentHeight + "-" + j + "").css("color", "grey");
+                    barrier.push([currentHeight, j])
+                }
+            }
+        }
+        isBarrier = true;
+        timeBarrier = seconds;
+
+    }
+
+    function deleteBarrier() {
+        for (let i = 0; i < barrier.length; i++) {
+            $("#" + barrier[i][0] + "-" + barrier[i][1] + "").css("background", "none");
+            $("#" + barrier[i][0] + "-" + barrier[i][1] + "").text("0");
+            $("#" + barrier[i][0] + "-" + barrier[i][1] + "").css("color", "white");
+        }
+        isBarrier = false
+        barrier = []
+    }
+
     let l = [[-1, 4], [-2, 4], [-3, 4], [-1, 5], [-2, 4]]
     let rl = [[-1, 4], [-1, 5], [-2, 5], [-3, 5], [-2, 5]]
     let long = [[0, 5], [-1, 5], [-2, 5], [-3, 5], [-1, 5]]
-    let square = [[-2, 4], [-2, 5], [-3, 4], [-3, 5]]
+    let square = [[-2, 4], [-2, 5], [-3, 4], [-3, 5], [-2, 5]]
     let t = [[-2, 4], [-2, 5], [-2, 6], [-3, 5], [-2, 5]]
     let z = [[-2, 4], [-2, 5], [-3, 5], [-3, 6], [-2, 5]]
     let type = [l, rl, long, square, t, z];
@@ -557,7 +632,7 @@ $(document).ready(function () {
         }
         for (let j = 0; j < 10; j++) {
             $("#" + 10 + "-" + j + "").css("background", "grey");
-            $("#" + 10 + "-" + j + "").text("2");
+            $("#" + 10 + "-" + j + "").text("3");
             $("#" + 10 + "-" + j + "").css("color", "grey");
         }
 
@@ -614,46 +689,47 @@ $(document).ready(function () {
     $(document).keydown(function (e) {
         switch (e.which) {
             case 37: // left
-                if (currentLevel == "level6")
+                if (currentLevel == "level4")
                     moveRight(blocks_arr)
                 else
                     moveLeft(blocks_arr)
-                if (currentLevel == "level4")
+                if (currentLevel == "level6")
                     moveLeft(blocks_arr2)
                 break;
 
             case 38: // up
-                if (currentLevel == "level6")
+                if (currentLevel == "level4")
                     drop(blocks_arr);
                 else
                     turn(blocks_arr)
-                if (currentLevel == "level4")
+                if (currentLevel == "level6")
                     turn(blocks_arr2)
                 break;
 
             case 39: // right
-                if (currentLevel == "level6")
+                if (currentLevel == "level4")
                     moveLeft(blocks_arr)
                 else
                     moveRight(blocks_arr)
 
-                if (currentLevel == "level4")
+                if (currentLevel == "level6")
                     moveRight(blocks_arr2)
                 break;
 
             case 40: // down
-                if (currentLevel == "level6")
+                if (currentLevel == "level4")
                     turn(blocks_arr)
                 else
                     drop(blocks_arr);
-                if (currentLevel == "level4")
+                if (currentLevel == "level6")
                     moveUp(blocks_arr2)
                 break;
             case 32:
                 while (!isSettle(blocks_arr[0])) {
                     drop(blocks_arr)
                 }
-                if (currentLevel == "level4")
+                drop(blocks_arr)
+                if (currentLevel == "level6")
                     while (!isSettle2(blocks_arr2[0])) {
                         moveUp(blocks_arr2)
                     }
@@ -665,7 +741,7 @@ $(document).ready(function () {
         currentLevel = $(this).attr('id');
         $("#mainMenu").css("display", "none");
 
-        if (currentLevel == 'level4') {
+        if (currentLevel == 'level6') {
             make_playground2();
             makeBlock2(nextBlock2);
             makeBlock(nextBlock)
@@ -692,7 +768,7 @@ $(document).ready(function () {
         $("#win_dialog").css("display", "none");
         point = 0;
 
-        if (currentLevel == 'level4') {
+        if (currentLevel == 'level6') {
 
             make_playground2();
             makeBlock2(nextBlock2);
@@ -754,55 +830,9 @@ $(document).ready(function () {
     }
 
 
-    function level2(b, c) {
-        b = blocks_arr[0];
-        $(".counting").css("display", "block");
-        setTimeout(function () {
-            if (!isSettle(b)) {
-                drop(blocks_arr)
-            } else {
-
-                for (let i = 0; i < blocks_arr[0].length; i++) {
-                    let block1 = blocks_arr[0][i][0] + "-" + blocks_arr[0][i][1];
-                    $("#" + block1 + "").text("1");
-                }
-                makeBlock(nextBlock)
-                nextBlock = Math.floor(Math.random() * 6);
-                setNextImg(nextBlock)
-                if (isSettle(blocks_arr[0])) {
-                    c = 1000;
-                }
-
-                rewardChecking();
-                if (point >= 1000) {
-                    c = 1000;
-                    won = true;
-                }
-            }
-
-            c++;
-            if (c < 1000) {
-                level2(b, c);
-                if (seconds == 5) {
-                    seconds = 0;
-                    concreteLine(blocks_arr);
-                }
-            } else {
-                if (won) {
-                    $("#win_dialog").css("display", "block");
-                    $("#playground").remove();
-                } else {
-                    $("#dialog").css("display", "block");
-                    $("#playground").remove();
-                }
-            }
-        }, 500)
-
-    }
-
     function level3(b, c) {
-        b = blocks_arr[0];
 
+        b = blocks_arr[0];
         $(".counting").css("display", "block");
         setTimeout(function () {
             if (!isSettle(b)) {
@@ -830,6 +860,54 @@ $(document).ready(function () {
             c++;
             if (c < 1000) {
                 level3(b, c);
+                if (seconds == 5) {
+                    concreteLine(blocks_arr);
+                    seconds = 0;
+
+                }
+            } else {
+                if (won) {
+                    $("#win_dialog").css("display", "block");
+                    $("#playground").remove();
+                } else {
+                    $("#dialog").css("display", "block");
+                    $("#playground").remove();
+                }
+            }
+        }, 500)
+
+    }
+
+    function level2(b, c) {
+        b = blocks_arr[0];
+
+        $(".counting").css("display", "block");
+        setTimeout(function () {
+            if (!isSettle(b)) {
+                drop(blocks_arr)
+            } else {
+
+                for (let i = 0; i < blocks_arr[0].length; i++) {
+                    let block1 = blocks_arr[0][i][0] + "-" + blocks_arr[0][i][1];
+                    $("#" + block1 + "").text("1");
+                }
+                makeBlock(nextBlock)
+                nextBlock = Math.floor(Math.random() * 6);
+                setNextImg(nextBlock)
+                if (isSettle(blocks_arr[0])) {
+                    c = 1000;
+                }
+
+                rewardChecking();
+                if (point >= 1000) {
+                    c = 1000;
+                    won = true;
+                }
+            }
+
+            c++;
+            if (c < 1000) {
+                level2(b, c);
                 if (seconds == 25) {
                     seconds = 20;
                     boombing();
@@ -847,7 +925,7 @@ $(document).ready(function () {
 
     }
 
-    function level4(b, b2, c) {
+    function level6(b, b2, c) {
         max_row = 25
         b = blocks_arr[0];
         b2 = blocks_arr2[0];
@@ -896,7 +974,7 @@ $(document).ready(function () {
 
             c++;
             if (c < 1000) {
-                level4(b, b2, c);
+                level6(b, b2, c);
             } else {
                 max_row = 20
                 if (won) {
@@ -955,12 +1033,22 @@ $(document).ready(function () {
 
     }
 
-    function level6(b, c) {
+    function level4(b, c) {
         b = blocks_arr[0];
-
+        $(".counting").css("display", "block");
         setTimeout(function () {
             if (!isSettle(b)) {
+                var chance = Math.floor(Math.random() * 10);
+                if (isBarrier == true && seconds == timeBarrier + 4) {
+                    deleteBarrier()
+                }
+                if(isBarrier == true &&barrier[0][0]+1<b[4][0][0])
+                    deleteBarrier()
                 drop(blocks_arr)
+                if (chance < 3 && isBarrier == false) {
+                    makeBarrier();
+                }
+
             } else {
 
                 for (let i = 0; i < blocks_arr[0].length; i++) {
@@ -983,7 +1071,7 @@ $(document).ready(function () {
 
             c++;
             if (c < 1000) {
-                level6(b, c);
+                level4(b, c);
             } else {
                 if (won) {
                     $("#win_dialog").css("display", "block");
@@ -999,25 +1087,29 @@ $(document).ready(function () {
 
     function play(level, b) {
         let c = 0;
+        seconds = 0;
         switch (level) {
             case 'level1':
                 level1(b[0], c)
                 break;
             case 'level2':
+
                 level2(b[0], c)
                 break;
             case 'level3':
                 level3(b[0], c);
                 break;
             case 'level4':
-                level4(b[0], b[1], c);
+                level4(b[0], c);
                 break;
             case 'level5':
                 level5(b[0], c);
                 break;
             case 'level6':
-                level6(b[0], c);
+                level6(b[0], b[1], c);
+
                 break;
         }
     }
-});
+})
+;

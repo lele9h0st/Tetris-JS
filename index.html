@@ -6,34 +6,58 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+<audio id="line" controls style="display:none">
+    <source src="sound/single.wav" type="audio/wav"> Your browser does not support the audio element.
+</audio>
+<audio id="select" controls style="display:none">
+    <source src="sound/rotate.wav" type="audio/wav"> Your browser does not support the audio element.
+</audio><audio id="harddrop" controls style="display:none">
+    <source src="sound/harddrop.wav" type="audio/wav"> Your browser does not support the audio element.
+</audio>
+</audio><audio id="softdrop" controls style="display:none">
+    <source src="sound/softdrop.wav" type="audio/wav"> Your browser does not support the audio element.
+</audio>
 <div id="main">
     <div id="mainMenu">
         <div class="banner"><img class="image-banner" src="images/tetris logo.jpg"></div>
         <div class="levels">
-        <button class="level" id="level1">Level 1</button>
-        <button class="level" id="level2">Level 2</button>
-        <button class="level" id="level3">Level 3</button>
-        <button class="level" id="level4">Level 4</button>
-        <button class="level" id="level5">Level 5</button>
-        <button class="level" id="level6">Level 6</button>
+            <button class="level" id="level1">Level 1</button>
+            <button class="level" id="level2">Level 2</button>
+            <button class="level" id="level3">Level 3</button>
+            <button class="level" id="level4">Level 4</button>
+            <button class="level" id="level5">Level 5</button>
+            <button class="level" id="level6">Level 6</button>
         </div>
     </div>
     <div id="dialog">
-        <div class="">you lose KEKW</div>
-        <button class="restart">restart</button>
-        <button class="dialog_mainmenu">main menu</button>
+        <div class="" style="align-items: center">you lose! Try harder next time!</div>
+        <button class="restart">Restart</button>
+        <button class="dialog_mainmenu">Main menu</button>
     </div>
     <div id="win_dialog">
-        <div class="">win</div>
-        <button class="nextLevel">next level</button>
-        <button class="dialog_mainmenu">main menu</button>
+        <div class="" style="align-items: center">You won! Congratulation!</div>
+        <button class="nextLevel">Next level</button>
+        <button class="dialog_mainmenu">Main menu</button>
     </div>
     <div id="rightPanel">
-        <div class="image_panel"><img class="next-img" src="" ></div>
-
-        <div class="point">0</div>
-        <div class="counting">Counting: 0</div>
+        <div class="image_panel"><img class="next-img" src="images/white.PNG"></div>
+        <div>
+            <div>Point</div>
+            <div class="point">0</div>
+        </div>
+        <div>
+            <div class="">Counting</div>
+            <div class="counting">0</div>
+        </div>
+        <div>
+            <button class="restart-right" style="display: none">Restart</button>
+        </div>
+        <div>
+            <button class="dialog_mainmenu-right"style="display: none">Main menu</button>
+        </div>
+        <div class="image_panel2" ><img class="next-img2" src="images/white.PNG"></div>
     </div>
+    <div id="instruction"> <img class="is-img" src="images/WELCOME.png"></div>
 </div>
 
 

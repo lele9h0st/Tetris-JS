@@ -1,5 +1,5 @@
 $(document).ready(function () {
-
+    //xác định khối bên trái cùng để xác định tránh va chạm khi di chuyển sang trái
     function left_most_block(blocks) {
         let min = blocks[0][1];
         let min_index = 0;
@@ -11,7 +11,7 @@ $(document).ready(function () {
         }
         return min;
     }
-
+//xác định khối bên phải cùng để xác định tránh va chạm khi di chuyển sang phải
     function right_most_block(blocks) {
         let max = blocks[0][1];
         let max_index = 0;
@@ -23,7 +23,7 @@ $(document).ready(function () {
         }
         return max;
     }
-
+//di chuyển khối gạch sang trái
     function moveLeft(blocks_arr) {
         let matrix = blocks_arr[0];
         let left_most_index = left_most_block([...matrix])
@@ -46,11 +46,6 @@ $(document).ready(function () {
                 matrix[4] = loc;
                 let block1 = matrix[4][0] + "-" + matrix[4][1]
                 let oldblock = oldLoc[0] + "-" + (loc[1] + 1);
-                // $("#" + block1 + "").css("background", blocks_arr[3]);
-                // $("#" + block1 + "").css("color", blocks_arr[3]);
-                //
-                // $("#" + oldblock + "").css("background", "none");
-                // $("#" + oldblock + "").css("color", "white");
                 changeColor(oldblock, block1, blocks_arr[3])
             }
             for (let i = 0; i < 4; i++) {
@@ -61,11 +56,6 @@ $(document).ready(function () {
                 matrix[i] = loc;
                 let block1 = matrix[i][0] + "-" + matrix[i][1]
                 let oldblock = oldLoc[0] + "-" + (loc[1] + 1);
-                // $("#" + block1 + "").css("background", blocks_arr[3]);
-                // $("#" + block1 + "").css("color", blocks_arr[3]);
-                //
-                // $("#" + oldblock + "").css("background", "none");
-                // $("#" + oldblock + "").css("color", "white");
                 changeColor(oldblock, block1, blocks_arr[3])
             }
 
@@ -73,7 +63,7 @@ $(document).ready(function () {
         }
         return matrix
     }
-
+//di chuyển khối gạch sang phải
     function moveRight(blocks_arr) {
         let matrix = blocks_arr[0];
         let right_most_index = right_most_block([...matrix])
@@ -96,29 +86,24 @@ $(document).ready(function () {
                 matrix[i] = loc;
                 let block1 = matrix[i][0] + "-" + matrix[i][1]
                 let oldblock = oldLoc[0] + "-" + (loc[1] - 1);
-                // $("#" + block1 + "").css("background", blocks_arr[3]);
-                // $("#" + block1 + "").css("color", blocks_arr[3]);
-                //
-                // $("#" + oldblock + "").css("background", "none");
-                // $("#" + oldblock + "").css("color", "white");
                 changeColor(oldblock, block1, blocks_arr[3])
 
             }
         }
         return matrix
     }
-
+    // thay đổi màu trên playground khi khối gạch thay đổi vị trí
     function changeColor(oldBlock, newBlock, color) {
         $("#" + newBlock + "").css("background", color);
         $("#" + newBlock + "").css("color", color);
 
         if (oldBlock != null) {
             $("#" + oldBlock + "").css("background", "none");
-            $("#" + oldBlock + "").css("color", "white");
+            $("#" + oldBlock + "").css("color", "#f4f1ec");
         }
 
     }
-
+    // kiểm tra xem khối gạch đã đáp hay chưa
     function isSettle(matrix) {
         for (let i = 0; i < matrix.length; i++) {
             let loc = matrix[i];
@@ -133,8 +118,9 @@ $(document).ready(function () {
         }
         return false;
     }
+    //kiểm tra khối gạch đã đáp hay chưa dùng cho khối gạch đi lên ơ level 6
 
-    function isSettle2(matrix) {
+     function isSettle2(matrix) {
         for (let i = 0; i < matrix.length; i++) {
             let loc = matrix[i];
             let nextloc = loc[0] - 1;
@@ -150,11 +136,11 @@ $(document).ready(function () {
     }
 
     var max_row = 20
-
+    //kiểm tra khối vuông khi thay đổi vị trí có bị đè lên khối gạch hay tường hay không
     function isDuplicate(array, i) {
         return $("#" + array[i][0] + "-" + array[i][1]).text() === "1" || $("#" + array[i][0] + "-" + array[i][1]).text() === "3" || array[i][0] > (max_row - 1) || array[i][1] < 0 || array[i][1] > 9;
     }
-
+    //kiểm tra khối gạch có thay đổi va chạm với khối gạch khác hay tường khi quay
     function checkTurn(array) {
         let dif;
 
@@ -289,7 +275,7 @@ $(document).ready(function () {
         }
         return [oldBlocks, newBlocks, array]
     }
-
+    //quay khối gạch
     function turn(blocks_arr) {
         let array = [...blocks_arr[0]];
         let isCheck = checkTurn(array);
@@ -303,17 +289,16 @@ $(document).ready(function () {
                 $("#" + isCheck[1][i] + "").css("color", blocks_arr[3]);
                 if (isCheck[0][i] != null && !isCheck[1].includes(isCheck[0][i])) {
                     $("#" + isCheck[0][i] + "").css("background", "none");
-                    $("#" + isCheck[0][i] + "").css("color", "white");
+                    $("#" + isCheck[0][i] + "").css("color", "#f4f1ec");
                 }
             }
         }
-
         clone.sort(compare);
         clone[4] = array[4]
         changeColor(null, clone[4][0] + "-" + clone[4][1], blocks_arr[3])
         blocks_arr[0] = clone;
     }
-
+    // so sanh để có thể sắp xếp thứ tự khối vuông trong mảng vị trí khối vuông của khối gạch
     function compare(a, b) {
         if (a[0] == b[0]) {
             return a[1] - b[i];
@@ -323,7 +308,7 @@ $(document).ready(function () {
 
 
     }
-
+    //di chuyển khối gạch lên trên
     function moveUp(blocks_arr) {
         let matrix = blocks_arr[0]
         if (!isSettle2(matrix)) {
@@ -339,7 +324,7 @@ $(document).ready(function () {
             }
             for (let i = 0; i < matrix.length; i++) {
                 $("#" + oldblock[i] + "").css("background", "none");
-                $("#" + oldblock[i] + "").css("color", "white");
+                $("#" + oldblock[i] + "").css("color", "#f4f1ec");
             }
             for (let i = 0; i < matrix.length; i++) {
                 $("#" + block1[i] + "").css("background", blocks_arr[3]);
@@ -352,7 +337,7 @@ $(document).ready(function () {
             }
         }
     }
-
+    //di chuyển khối gạch xuống dưới
     function drop(blocks_arr) {
         let matrix = blocks_arr[0]
         if (!isSettle(matrix)) {
@@ -368,7 +353,7 @@ $(document).ready(function () {
             }
             for (let i = 0; i < matrix.length; i++) {
                 $("#" + oldblock[i] + "").css("background", "none");
-                $("#" + oldblock[i] + "").css("color", "white");
+                $("#" + oldblock[i] + "").css("color", "#f4f1ec");
             }
             for (let i = 0; i < matrix.length; i++) {
                 $("#" + block1[i] + "").css("background", blocks_arr[3]);
@@ -381,7 +366,7 @@ $(document).ready(function () {
             }
         }
     }
-
+    //kiểm tra xem có hàng nào được lấp đầy hay chưa
     function rewardChecking() {
         for (let i = 0; i < 20; i++) {
             let sum = 0;
@@ -405,10 +390,54 @@ $(document).ready(function () {
 
                     }
                 }
+                $('#line')[0].play();
             }
         }
     }
+//kiểm tra xem có hàng nào được lấp đầy hay chưa cho level 6
+    function rewardChecking_level6() {
+        for (let i = 0; i < 20; i++) {
+            let sum = 0;
+            for (let j = 0; j < 10; j++) {
+                idname = i + "-" + j
+                sum += parseInt($("#" + idname).text());
+            }
+            if (sum == 10) {
+                point += 100;
+                $(".point").text(point);
+                if (i < 10) {
+                    for (let k = i - 1; k >= 0; k--) {
+                        for (let j = 0; j < 10; j++) {
+                            idname = (k + 1) + "-" + j;
+                            let idUpName = k + "-" + j;
+                            let background = $("#" + idUpName).css("background");
+                            let txt = $("#" + idUpName).text();
+                            let color = $("#" + idUpName).css("color");
+                            $("#" + idname).css("background", background);
+                            $("#" + idname).text(txt);
+                            $("#" + idname).css("color", color);
 
+                        }
+                    }
+                } else if (i > 10) {
+                    for (let k = i + 1; k < 20; k++) {
+                        for (let j = 0; j < 10; j++) {
+                            idname = (k - 1) + "-" + j;
+                            let idUpName = k + "-" + j;
+                            let background = $("#" + idUpName).css("background");
+                            let txt = $("#" + idUpName).text();
+                            let color = $("#" + idUpName).css("color");
+                            $("#" + idname).css("background", background);
+                            $("#" + idname).text(txt);
+                            $("#" + idname).css("color", color);
+
+                        }
+                    }
+                }
+            }
+        }
+    }
+//kiểm tra xem có hàng nào được lấp đầy hay chưa cho level 5
     function rewardChecking_level5() {
         var color_arr = []
         var c = "";
@@ -452,35 +481,21 @@ $(document).ready(function () {
             color_arr = []
         }
     }
-
+    //xác định khối trung tâm phục vụ cho việc xoay khối gạch
     function centerBlock(blocks, index) {
         let center;
         switch (index) {
-            // case 0:
-            //     center = blocks[4];
-            //     break;
-            // case 1:
-            //     center = blocks[4];
-            //     break;
-            // case 2:
-            //     center = blocks[4];
-            //     break;
-            case 3:
 
+            case 3:
+                center = blocks[4];
                 break;
-            // case 4:
-            //     center = blocks[4];
-            //     break;
-            // case 5:
-            //     center = blocks[4];
-            //     break;
             default:
                 center = blocks[4];
 
         }
         return center;
     }
-
+    //tạo hàng xám
     function concreteLine(blocks_arr) {
         for (let k = 1; k < 20; k++) {
             for (let j = 0; j < 10; j++) {
@@ -506,15 +521,16 @@ $(document).ready(function () {
     }
 
     var seconds = 0
-
+    //bộ đếm thời gian
     function incrementSeconds() {
         seconds += 1;
-        $(".counting").text("Counting: " + seconds);
+        $(".counting").text(seconds);
 
     }
 
     setInterval(incrementSeconds, 1000);
 
+    //xóa ô vuông nhỏ ở level2
     function boombing() {
         while (true) {
             var x = Math.floor(Math.random() * 9);
@@ -522,7 +538,7 @@ $(document).ready(function () {
             if ($("#" + y + "-" + x + "").text() == "1" && $("#" + y + "-" + x + "").css("background") != "none") {
                 $("#" + y + "-" + x + "").text("0");
                 $("#" + y + "-" + x + "").css("background", "none");
-                $("#" + y + "-" + x + "").css("color", "white");
+                $("#" + y + "-" + x + "").css("color", "#f4f1ec");
                 break;
             }
         }
@@ -531,9 +547,9 @@ $(document).ready(function () {
     var barrier = []
     var isBarrier = false;
     var timeBarrier = 0;
-
+    // tạo rào chắn ở level4
     function makeBarrier() {
-        var currentHeight = blocks_arr[0][4][0] + 3 ;
+        var currentHeight = blocks_arr[0][4][0] + 3;
         var side = 0
         var sum = 0
         if (blocks_arr[0][4][1] >= 5)
@@ -568,17 +584,21 @@ $(document).ready(function () {
         timeBarrier = seconds;
 
     }
-
+    // tạo rào chắn ở level4
     function deleteBarrier() {
         for (let i = 0; i < barrier.length; i++) {
             $("#" + barrier[i][0] + "-" + barrier[i][1] + "").css("background", "none");
             $("#" + barrier[i][0] + "-" + barrier[i][1] + "").text("0");
-            $("#" + barrier[i][0] + "-" + barrier[i][1] + "").css("color", "white");
+            $("#" + barrier[i][0] + "-" + barrier[i][1] + "").css("color", "#f4f1ec");
         }
         isBarrier = false
         barrier = []
     }
 
+    var timeout;
+    var c = 0;
+    // mỗi loại khối gạch có ma trận vị trí riêng
+    //thứ tự khối vuông trong mỗi khối gạch được xắp sếp: trái->phải;dưới->trên
     let l = [[-1, 4], [-2, 4], [-3, 4], [-1, 5], [-2, 4]]
     let rl = [[-1, 4], [-1, 5], [-2, 5], [-3, 5], [-2, 5]]
     let long = [[0, 5], [-1, 5], [-2, 5], [-3, 5], [-1, 5]]
@@ -588,13 +608,14 @@ $(document).ready(function () {
     let type = [l, rl, long, square, t, z];
     let images = [['images/l.PNG', '40px', '60px'], ['images/rl.PNG', '40px', '60px'], ['images/dai.PNG', '20px', '80px'], ['images/square.PNG', '40px', '40px'], ['images/T.PNG', '60px', '40px'], ['images/z.PNG', '60px', '40px']]
     let color = ["red", "green", "blue", "yellow", "purple", "orange"]
+    let tutorial = ['images/LEVEL1TUTORIAL.png', 'images/LEVEL2TUTORIAL.png', 'images/LEVEL3TUTORIAL.png', 'images/LEVEL4TUTORIAL.png', 'images/LEVEL5TUTORIAL.png', 'images/LEVEL6TUTORIAL.png',]
     var blocks_arr = [];
     var blocks_arr2 = [];
     var won = false;
     var nextBlock = Math.floor(Math.random() * 6);
     var nextBlock2 = Math.floor(Math.random() * 6);
-    var currentLevel = ""
-
+    var currentLevel = "main"
+    //tạo khu vục chơi
     function make_playground() {
         $("#main").prepend('<div  id="playground"></div>')
         $("#main").prepend('<div class="banner" ><img class="image-banner" src="images/tetris logo.jpg"> </div>')
@@ -603,7 +624,7 @@ $(document).ready(function () {
             for (let j = 0; j < 10; j++) {
                 idname = (i - 3) + "-" + j
                 if (i < 3) {
-                    $("#playground").append('<div class="small-block-non-border" id="' + idname + '" >0</div>')
+                    $("#playground").append('<div class="small-block" id="' + idname + '" >0</div>')
                 } else {
                     $("#playground").append('<div class="small-block" id="' + idname + '" style="background: none">0</div>')
 
@@ -612,7 +633,7 @@ $(document).ready(function () {
         }
 
     }
-
+    //tạo khu vực chơi cho tầng 6
     function make_playground2() {
 
         $("#main").prepend('<div  id="playground"></div>')
@@ -624,7 +645,7 @@ $(document).ready(function () {
             for (let j = 0; j < 10; j++) {
                 idname = (i - 3) + "-" + j
                 if (i < 3 || i > 23) {
-                    $("#playground").append('<div class="small-block-non-border" id="' + idname + '" >0</div>')
+                    $("#playground").append('<div class="small-block" id="' + idname + '" >0</div>')
                 } else {
                     $("#playground").append('<div class="small-block" id="' + idname + '" style="background: none">0</div>')
                 }
@@ -637,7 +658,7 @@ $(document).ready(function () {
         }
 
     }
-
+    //tạo khối gạch
     function makeBlock(nextBlock) {
         var arr = [...type[nextBlock]];
         let id = 0;
@@ -653,14 +674,10 @@ $(document).ready(function () {
         }
         return blocks_arr
     }
-
+//tạo khối gạch thứ 2
     function makeBlock2(nextBlock) {
         var arr = [...type[nextBlock]];
-        var arr2
-        if (nextBlock == 3)
-            arr2 = [[0, 0], [0, 0], [0, 0], [0, 0]];
-        else
-            arr2 = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0]];
+        var arr2 = [[0, 0], [0, 0], [0, 0], [0, 0], [0, 0]];
         let id = 0;
         var c = 1;
         for (let i = 0; i < arr.length; i++) {
@@ -677,15 +694,22 @@ $(document).ready(function () {
         }
         return blocks_arr2
     }
-
+    //set ảnh cho khối gạch tiếp theo ở phần thông tin
     function setNextImg(nextBlock) {
         $('.next-img').attr('src', images[nextBlock][0]);
         $('.next-img').css('width', images[nextBlock][1]);
         $('.next-img').css('height', images[nextBlock][2]);
     }
+//set ảnh cho khối gạch thứ 2 tiếp theo ở phần thông tin
+    function setNextImg2(nextBlock2) {
+        $('.next-img2').attr('src', images[nextBlock2][0]);
+        $('.next-img2').css('width', images[nextBlock2][1]);
+        $('.next-img2').css('height', images[nextBlock2][2]);
+    }
 
     var i = 1;
     var point = 0;
+    //tương tác di chuyển khối gạch
     $(document).keydown(function (e) {
         switch (e.which) {
             case 37: // left
@@ -704,6 +728,7 @@ $(document).ready(function () {
                     turn(blocks_arr)
                 if (currentLevel == "level6")
                     turn(blocks_arr2)
+                $("#select")[0].play();
                 break;
 
             case 39: // right
@@ -723,8 +748,10 @@ $(document).ready(function () {
                     drop(blocks_arr);
                 if (currentLevel == "level6")
                     moveUp(blocks_arr2)
+                $("#softdrop")[0].play();
                 break;
             case 32:
+                e.preventDefault();
                 while (!isSettle(blocks_arr[0])) {
                     drop(blocks_arr)
                 }
@@ -733,14 +760,60 @@ $(document).ready(function () {
                     while (!isSettle2(blocks_arr2[0])) {
                         moveUp(blocks_arr2)
                     }
+                $("#harddrop")[0].play();
         }
     });
     var block_list = []
+    //next level khi hoàn thành màn chơi
+    $(".nextLevel").click(function () {
+        if (currentLevel == "level6") {
+            $("#win_dialog").css("display", "none");
+            $("#mainMenu").css("display", "block");
+            $(".restart-right").css("display", "none");
+            $(".is-img").attr('src', "images/WELCOME.png");
+            $(".banner-bottom").remove();
+        } else {
+            $("#win_dialog").css("display", "none");
+            point = 0;
+            $(".point").text(point);
+            let index = parseInt(currentLevel.charAt(5));
+            index++;
+            currentLevel = currentLevel.substring(0, 5) + index;
+            $("#mainMenu").css("display", "none");
+            $(".restart-right").css("display", "inline");
+            $(".dialog_mainmenu-right").css("display", "inline");
+            if (currentLevel == 'level6') {
+                make_playground2();
+                makeBlock2(nextBlock2);
+                makeBlock(nextBlock)
+                block_list[0] = blocks_arr[0]
+                block_list[1] = blocks_arr2[0]
+            } else {
+                make_playground();
+                makeBlock(nextBlock)
+                block_list[0] = blocks_arr[0]
+            }
+
+
+            nextBlock = Math.floor(Math.random() * 6);
+            setNextImg(nextBlock)
+            if (currentLevel == 'level6') {
+                nextBlock2 = Math.floor(Math.random() * 6);
+                setNextImg2(nextBlock2)
+            }
+            $(".is-img").attr('src', tutorial[index - 1]);
+            play(currentLevel, block_list)
+        }
+    });
+    //tường tác chọn level
     $(".level").click(function () {
         point = 0;
+        $(".point").text(point);
         currentLevel = $(this).attr('id');
+        let index = parseInt(currentLevel.charAt(5));
         $("#mainMenu").css("display", "none");
-
+        $(".restart-right").css("display", "inline");
+        $(".dialog_mainmenu-right").css("display", "inline");
         if (currentLevel == 'level6') {
             make_playground2();
             makeBlock2(nextBlock2);
@@ -756,18 +829,66 @@ $(document).ready(function () {
 
         nextBlock = Math.floor(Math.random() * 6);
         setNextImg(nextBlock)
+        if (currentLevel == 'level6') {
+            nextBlock2 = Math.floor(Math.random() * 6);
+            setNextImg2(nextBlock2)
+        }
+        $(".is-img").attr('src', tutorial[index - 1]);
         play(currentLevel, block_list)
 
     })
+
+
     $(".dialog_mainmenu").click(function () {
         $("#dialog").css("display", "none");
         $("#mainMenu").css("display", "block");
+        $(".restart-right").css("display", "none");
+        $(".is-img").attr('src', "images/WELCOME.png");
     })
-    $(".restart").click(function () {
+    $(".dialog_mainmenu-right").click(function () {
+        $(".banner-bottom").remove();
+        clearTimeout(timeout);
+        $("#playground").remove();
+        $("#dialog").css("display", "none");
+        $("#mainMenu").css("display", "block");
+        $(".restart-right").css("display", "none");
+        $(".dialog_mainmenu-right").css("display", "none");
+        $(".is-img").attr('src', "images/WELCOME.png");
+    })
+
+    //tường tác chơi lại
+    $(".restart ").click(function () {
         $("#dialog").css("display", "none");
         $("#win_dialog").css("display", "none");
         point = 0;
+        $(".point").text(point);
+        if (currentLevel == 'level6') {
 
+            make_playground2();
+            makeBlock2(nextBlock2);
+            makeBlock(nextBlock)
+            block_list[0] = blocks_arr[0]
+            block_list[1] = blocks_arr2[0]
+        } else {
+            make_playground();
+            makeBlock(nextBlock)
+            block_list[0] = blocks_arr[0]
+        }
+
+
+        nextBlock = Math.floor(Math.random() * 6);
+        setNextImg(nextBlock)
+        play(currentLevel, block_list)
+    })
+    $(".restart-right").click(function () {
+        $(this).css("display", "none");
+        $(this).css("display", "inline");
+        clearTimeout(timeout);
+        $("#dialog").css("display", "none");
+        $("#win_dialog").css("display", "none");
+        point = 0;
+        $(".point").text(point);
+        $("#playground").remove();
         if (currentLevel == 'level6') {
 
             make_playground2();
@@ -787,10 +908,13 @@ $(document).ready(function () {
         play(currentLevel, block_list)
     })
 
+
+    //level 1
     function level1(b, c) {
         b = blocks_arr[0];
 
-        setTimeout(function () {
+        timeout = setTimeout(function () {
+            console.log(c)
             if (!isSettle(b)) {
                 drop(blocks_arr)
             } else {
@@ -820,6 +944,7 @@ $(document).ready(function () {
                 if (won) {
                     $("#win_dialog").css("display", "block");
                     $("#playground").remove();
+                    won=false;
                 } else {
                     $("#dialog").css("display", "block");
                     $("#playground").remove();
@@ -829,12 +954,13 @@ $(document).ready(function () {
 
     }
 
-
+    //level3
     function level3(b, c) {
 
         b = blocks_arr[0];
         $(".counting").css("display", "block");
-        setTimeout(function () {
+        timeout = setTimeout(function () {
+
             if (!isSettle(b)) {
                 drop(blocks_arr)
             } else {
@@ -869,6 +995,7 @@ $(document).ready(function () {
                 if (won) {
                     $("#win_dialog").css("display", "block");
                     $("#playground").remove();
+                    won=false;
                 } else {
                     $("#dialog").css("display", "block");
                     $("#playground").remove();
@@ -877,12 +1004,12 @@ $(document).ready(function () {
         }, 500)
 
     }
-
+    //level2
     function level2(b, c) {
         b = blocks_arr[0];
 
         $(".counting").css("display", "block");
-        setTimeout(function () {
+        timeout = setTimeout(function () {
             if (!isSettle(b)) {
                 drop(blocks_arr)
             } else {
@@ -916,6 +1043,7 @@ $(document).ready(function () {
                 if (won) {
                     $("#win_dialog").css("display", "block");
                     $("#playground").remove();
+                    won=false;
                 } else {
                     $("#dialog").css("display", "block");
                     $("#playground").remove();
@@ -924,12 +1052,12 @@ $(document).ready(function () {
         }, 500)
 
     }
-
+    //level6
     function level6(b, b2, c) {
         max_row = 25
         b = blocks_arr[0];
         b2 = blocks_arr2[0];
-        setTimeout(function () {
+        timeout = setTimeout(function () {
             if (!isSettle(b)) {
                 drop(blocks_arr)
             } else {
@@ -960,12 +1088,13 @@ $(document).ready(function () {
                 }
                 makeBlock2(nextBlock2)
                 nextBlock2 = Math.floor(Math.random() * 6);
-                setNextImg(nextBlock)
+
+                setNextImg2(nextBlock2)
                 if (isSettle2(blocks_arr2[0])) {
                     c = 1000;
                 }
 
-                rewardChecking();
+                rewardChecking_level6();
                 if (point >= 1000) {
                     c = 1000;
                     won = true;
@@ -980,6 +1109,7 @@ $(document).ready(function () {
                 if (won) {
                     $("#win_dialog").css("display", "block");
                     $("#playground").remove();
+                    won=false;
                 } else {
                     $("#dialog").css("display", "block");
                     $("#playground").remove();
@@ -990,11 +1120,11 @@ $(document).ready(function () {
         }, 1000)
 
     }
-
+    //level5
     function level5(b, c) {
         b = blocks_arr[0];
 
-        setTimeout(function () {
+        timeout = setTimeout(function () {
             if (!isSettle(b)) {
                 drop(blocks_arr)
             } else {
@@ -1024,6 +1154,7 @@ $(document).ready(function () {
                 if (won) {
                     $("#win_dialog").css("display", "block");
                     $("#playground").remove();
+                    won=false;
                 } else {
                     $("#dialog").css("display", "block");
                     $("#playground").remove();
@@ -1032,25 +1163,25 @@ $(document).ready(function () {
         }, 500)
 
     }
-
+    //level4
     function level4(b, c) {
         b = blocks_arr[0];
         $(".counting").css("display", "block");
-        setTimeout(function () {
+        timeout = setTimeout(function () {
             if (!isSettle(b)) {
                 var chance = Math.floor(Math.random() * 10);
-                if (isBarrier == true && seconds == timeBarrier + 4) {
+                if (isBarrier == true && seconds == timeBarrier + 3) {
                     deleteBarrier()
                 }
-                if(isBarrier == true &&barrier[0][0]+1<b[4][0][0])
-                    deleteBarrier()
+                // if (isBarrier == true && barrier[0][0] + 1 < b[4][0][0])
+                //     deleteBarrier()
                 drop(blocks_arr)
-                if (chance < 3 && isBarrier == false) {
+                if (chance < 4 && isBarrier == false) {
                     makeBarrier();
                 }
 
             } else {
-
+                deleteBarrier()
                 for (let i = 0; i < blocks_arr[0].length; i++) {
                     let block1 = blocks_arr[0][i][0] + "-" + blocks_arr[0][i][1];
                     $("#" + block1 + "").text("1");
@@ -1076,17 +1207,18 @@ $(document).ready(function () {
                 if (won) {
                     $("#win_dialog").css("display", "block");
                     $("#playground").remove();
+                    won=false;
                 } else {
                     $("#dialog").css("display", "block");
                     $("#playground").remove();
                 }
             }
-        }, 1000)
+        }, 500)
 
     }
 
     function play(level, b) {
-        let c = 0;
+        c = 0;
         seconds = 0;
         switch (level) {
             case 'level1':
